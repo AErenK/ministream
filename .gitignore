@@ -1,0 +1,9 @@
+test_temel
+test_bellek
+benchmark
+test_csv_tmp
+test_ref_hata_tmp
+tmp_sizes
+ministream.so
+*.o
+*.out

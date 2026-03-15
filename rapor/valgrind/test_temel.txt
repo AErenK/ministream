@@ -1,0 +1,39 @@
+==403== Memcheck, a memory error detector
+==403== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==403== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==403== Command: ./test_temel
+==403== 
+===== MiniStream Birim Testleri =====
+
+[TEST] sarki_olustur
+√ sarki NULL degil
+√ id dogru
+√ baslik dogru
+√ ref_sayisi baslangicta 0
+√ 1 malloc yapildi
+√ SIZINTI yok
+
+[TEST] liste_sarki_ekle
+√ 2 sarki eklendi
+√ s1 ref_sayisi artti
+√ s2 ref_sayisi artti
+√ pointer kopyalandi
+√ SIZINTI yok
+
+[TEST] ref_sayisi
+√ 2 listede ref_sayisi == 2
+√ 1 cikarinca ref_sayisi == 1
+UYARI: "Shared Track" hala 1 listede kullaniliyor!
+√ ref_sayisi>0 iken silinemez
+√ SIZINTI yok
+
+===============================
+==403== 
+==403== HEAP SUMMARY:
+==403==     in use at exit: 0 bytes in 0 blocks
+==403==   total heap usage: 11 allocs, 11 frees, 5,864 bytes allocated
+==403== 
+==403== All heap blocks were freed -- no leaks are possible
+==403== 
+==403== For lists of detected and suppressed errors, rerun with: -s
+==403== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

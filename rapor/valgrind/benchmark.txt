@@ -1,0 +1,40 @@
+==407== Memcheck, a memory error detector
+==407== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==407== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==407== Command: ./benchmark
+==407== 
+
+=== ARAMA BENCHMARK (1000 sorgu) ===
+|  N sarki |   LinkedList   |    HashMap     |   Fark   |
+|----------|----------------|----------------|----------|
+|      100 |        2.556 ms |        0.858 ms |      3.0x |
+|     1000 |        6.996 ms |        0.640 ms |     10.9x |
+|    10000 |      283.314 ms |        1.149 ms |    246.6x |
+|   100000 |     4233.801 ms |        9.117 ms |    464.4x |
+
+=== KOPYA MODELI ===
+Sure: 1076.608 ms
+=== BELLEK RAPORU ===
+malloc : 270001 kez,   86120000 byte
+free   : 270001 kez,   86120000 byte
+aktif  :          0 byte (0.00 MB)
+SIZINTI: 0 byte
+=====================
+
+=== POINTER MODELI ===
+Sure: 331.800 ms
+=== BELLEK RAPORU ===
+malloc : 20001 kez,    4120000 byte
+free   : 20001 kez,    4120000 byte
+aktif  :          0 byte (0.00 MB)
+SIZINTI: 0 byte
+=====================
+==407== 
+==407== HEAP SUMMARY:
+==407==     in use at exit: 0 bytes in 0 blocks
+==407==   total heap usage: 542,207 allocs, 542,207 frees, 174,358,464 bytes allocated
+==407== 
+==407== All heap blocks were freed -- no leaks are possible
+==407== 
+==407== For lists of detected and suppressed errors, rerun with: -s
+==407== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

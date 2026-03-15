@@ -1,0 +1,33 @@
+==405== Memcheck, a memory error detector
+==405== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==405== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==405== Command: ./test_bellek
+==405== 
+===== MiniStream Bellek Testleri =====
+
+[BELLEK TEST] toplu olustur/sil
+=== BELLEK RAPORU ===
+malloc : 10000 kez,    3280000 byte
+free   : 10000 kez,    3280000 byte
+aktif  :          0 byte (0.00 MB)
+SIZINTI: 0 byte
+=====================
+
+[BELLEK TEST] liste bellek yonetimi
+=== BELLEK RAPORU ===
+malloc :  5200 kez,    1655200 byte
+free   :  5200 kez,    1655200 byte
+aktif  :          0 byte (0.00 MB)
+SIZINTI: 0 byte
+=====================
+
+===============================
+==405== 
+==405== HEAP SUMMARY:
+==405==     in use at exit: 0 bytes in 0 blocks
+==405==   total heap usage: 15,501 allocs, 15,501 frees, 5,051,296 bytes allocated
+==405== 
+==405== All heap blocks were freed -- no leaks are possible
+==405== 
+==405== For lists of detected and suppressed errors, rerun with: -s
+==405== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

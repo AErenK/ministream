@@ -1,0 +1,92 @@
+==395== Memcheck, a memory error detector
+==395== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==395== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==395== Command: ./test_ref_hata_tmp
+==395== 
+==395== Invalid read of size 1
+==395==    at 0x484F226: strlen (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==395==    by 0x48C9DA7: __printf_buffer (vfprintf-process-arg.c:435)
+==395==    by 0x48CA73A: __vfprintf_internal (vfprintf-internal.c:1544)
+==395==    by 0x4996A3C: __printf_chk (printf_chk.c:33)
+==395==    by 0x1092B0: printf (stdio2.h:86)
+==395==    by 0x1092B0: main (temp_ref_hata.c:18)
+==395==  Address 0x4a74044 is 4 bytes inside a block of size 328 free'd
+==395==    at 0x484988F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==395==    by 0x10A391: izlened_free (bellek_izci.c:19)
+==395==    by 0x109292: sarki_sil_hatasi (temp_ref_hata.c:6)
+==395==    by 0x109292: main (temp_ref_hata.c:17)
+==395==  Block was alloc'd at
+==395==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==395==    by 0x10A35C: izlenen_malloc (bellek_izci.c:9)
+==395==    by 0x10955A: sarki_olustur (ministream.c:32)
+==395==    by 0x109231: main (temp_ref_hata.c:11)
+==395== 
+==395== Invalid read of size 1
+==395==    at 0x484F234: strlen (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==395==    by 0x48C9DA7: __printf_buffer (vfprintf-process-arg.c:435)
+==395==    by 0x48CA73A: __vfprintf_internal (vfprintf-internal.c:1544)
+==395==    by 0x4996A3C: __printf_chk (printf_chk.c:33)
+==395==    by 0x1092B0: printf (stdio2.h:86)
+==395==    by 0x1092B0: main (temp_ref_hata.c:18)
+==395==  Address 0x4a74045 is 5 bytes inside a block of size 328 free'd
+==395==    at 0x484988F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==395==    by 0x10A391: izlened_free (bellek_izci.c:19)
+==395==    by 0x109292: sarki_sil_hatasi (temp_ref_hata.c:6)
+==395==    by 0x109292: main (temp_ref_hata.c:17)
+==395==  Block was alloc'd at
+==395==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==395==    by 0x10A35C: izlenen_malloc (bellek_izci.c:9)
+==395==    by 0x10955A: sarki_olustur (ministream.c:32)
+==395==    by 0x109231: main (temp_ref_hata.c:11)
+==395== 
+==395== Invalid read of size 1
+==395==    at 0x4852EE0: memmove (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==395==    by 0x48BFD87: memcpy (string_fortified.h:29)
+==395==    by 0x48BFD87: __printf_buffer_write (Xprintf_buffer_write.c:39)
+==395==    by 0x48C851B: __printf_buffer (vfprintf-process-arg.c:501)
+==395==    by 0x48CA73A: __vfprintf_internal (vfprintf-internal.c:1544)
+==395==    by 0x4996A3C: __printf_chk (printf_chk.c:33)
+==395==    by 0x1092B0: printf (stdio2.h:86)
+==395==    by 0x1092B0: main (temp_ref_hata.c:18)
+==395==  Address 0x4a74044 is 4 bytes inside a block of size 328 free'd
+==395==    at 0x484988F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==395==    by 0x10A391: izlened_free (bellek_izci.c:19)
+==395==    by 0x109292: sarki_sil_hatasi (temp_ref_hata.c:6)
+==395==    by 0x109292: main (temp_ref_hata.c:17)
+==395==  Block was alloc'd at
+==395==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==395==    by 0x10A35C: izlenen_malloc (bellek_izci.c:9)
+==395==    by 0x10955A: sarki_olustur (ministream.c:32)
+==395==    by 0x109231: main (temp_ref_hata.c:11)
+==395== 
+==395== Invalid read of size 1
+==395==    at 0x4852EED: memmove (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==395==    by 0x48BFD87: memcpy (string_fortified.h:29)
+==395==    by 0x48BFD87: __printf_buffer_write (Xprintf_buffer_write.c:39)
+==395==    by 0x48C851B: __printf_buffer (vfprintf-process-arg.c:501)
+==395==    by 0x48CA73A: __vfprintf_internal (vfprintf-internal.c:1544)
+==395==    by 0x4996A3C: __printf_chk (printf_chk.c:33)
+==395==    by 0x1092B0: printf (stdio2.h:86)
+==395==    by 0x1092B0: main (temp_ref_hata.c:18)
+==395==  Address 0x4a74046 is 6 bytes inside a block of size 328 free'd
+==395==    at 0x484988F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==395==    by 0x10A391: izlened_free (bellek_izci.c:19)
+==395==    by 0x109292: sarki_sil_hatasi (temp_ref_hata.c:6)
+==395==    by 0x109292: main (temp_ref_hata.c:17)
+==395==  Block was alloc'd at
+==395==    at 0x4846828: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==395==    by 0x10A35C: izlenen_malloc (bellek_izci.c:9)
+==395==    by 0x10955A: sarki_olustur (ministream.c:32)
+==395==    by 0x109231: main (temp_ref_hata.c:11)
+==395== 
+ref_sayisi kontrolu yokmus gibi zorla free ediliyor...
+Ikinci listeden erisim: Shared Track
+==395== 
+==395== HEAP SUMMARY:
+==395==     in use at exit: 0 bytes in 0 blocks
+==395==   total heap usage: 6 allocs, 6 frees, 4,728 bytes allocated
+==395== 
+==395== All heap blocks were freed -- no leaks are possible
+==395== 
+==395== For lists of detected and suppressed errors, rerun with: -s
+==395== ERROR SUMMARY: 25 errors from 4 contexts (suppressed: 0 from 0)

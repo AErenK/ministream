@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MiniStream Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Segoe UI", system-ui, sans-serif; background: #0f1117; color: #e2e8f0; min-height: 100vh; }
+    header { background: #1a1d27; border-bottom: 1px solid #2d3147; padding: 1.2rem 2rem; display: flex; align-items: center; gap: 1rem; }
+    header h1 { font-size: 1.4rem; font-weight: 700; color: #7dd3fc; }
+    header span { font-size: 0.85rem; color: #64748b; }
+    main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .card { background: #1a1d27; border: 1px solid #2d3147; border-radius: 10px; padding: 1.2rem 1.5rem; }
+    .card-label { font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: .05em; }
+    .card-value { font-size: 1.9rem; font-weight: 700; margin-top: .3rem; }
+    .card-sub   { font-size: 0.78rem; color: #64748b; margin-top: .2rem; }
+    .green  { color: #4ade80; }
+    .blue   { color: #7dd3fc; }
+    .amber  { color: #fbbf24; }
+    .purple { color: #c084fc; }
+    .charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(460px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+    .chart-box { background: #1a1d27; border: 1px solid #2d3147; border-radius: 10px; padding: 1.4rem; }
+    .chart-box h2 { font-size: 0.95rem; font-weight: 600; color: #94a3b8; margin-bottom: 1rem; }
+    .json-box { background: #1a1d27; border: 1px solid #2d3147; border-radius: 10px; padding: 1.4rem; }
+    .json-box h2 { font-size: 0.95rem; font-weight: 600; color: #94a3b8; margin-bottom: .8rem; }
+    pre { font-size: 0.8rem; overflow-x: auto; color: #a3e635; line-height: 1.6; }
+    #status { text-align: center; padding: 4rem; font-size: 1.1rem; color: #64748b; }
+    button#reload { background: #2563eb; border: none; color: #fff; padding: .5rem 1.2rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; margin-left: 1rem; vertical-align: middle; }
+    button#reload:hover { background: #1d4ed8; }
+  </style>
+</head>
+<body>
+<header>
+  <h1>&#127925; MiniStream Dashboard</h1>
+  <span>Bellek &amp; Benchmark Gorsellestirme</span>
+  <button id="reload" onclick="loadData()">&#x21bb; Yenile</button>
+</header>
+<main>
+  <div id="status">Veri yukleniyor... <small>(server.py calisiyor olmali)</small></div>
+  <div id="content" style="display:none">
+    <div class="cards">
+      <div class="card"><div class="card-label">Bellek Farki</div><div class="card-value green" id="c-bellek">-</div><div class="card-sub">Kopya / Pointer modeli</div></div>
+      <div class="card"><div class="card-label">Hiz Farki</div><div class="card-value blue" id="c-hiz">-</div><div class="card-sub">Kopya / Pointer sure</div></div>
+      <div class="card"><div class="card-label">Arama Farki (N=1000)</div><div class="card-value amber" id="c-arama">-</div><div class="card-sub">LinkedList / HashMap</div></div>
+      <div class="card"><div class="card-label">Kopya malloc sayisi</div><div class="card-value purple" id="c-malloc">-</div><div class="card-sub">Pointer mallocunun kati</div></div>
+    </div>
+    <div class="charts">
+      <div class="chart-box"><h2>Bellek Kullanimi - Kopya vs Pointer (MB)</h2><canvas id="chartBellek"></canvas></div>
+      <div class="chart-box"><h2>Malloc Sayisi - Kopya vs Pointer</h2><canvas id="chartMalloc"></canvas></div>
+      <div class="chart-box"><h2>Arama Suresi - LinkedList vs HashMap (ms)</h2><canvas id="chartArama"></canvas></div>
+      <div class="chart-box"><h2>Calisma Suresi - Kopya vs Pointer (ms)</h2><canvas id="chartSure"></canvas></div>
+    </div>
+    <div class="json-box"><h2>Ham JSON Ciktisi  <small style="color:#475569;">(GET /benchmark)</small></h2><pre id="rawJson"></pre></div>
+  </div>
+</main>
+<script>
+const API = "http://localhost:8765/benchmark";
+let charts = {};
+function mb(b) { return (b/1048576).toFixed(2); }
+function makeChart(id, type, labels, datasets) {
+  const ctx = document.getElementById(id).getContext("2d");
+  if (charts[id]) charts[id].destroy();
+  charts[id] = new Chart(ctx, {
+    type, data: { labels, datasets },
+    options: { responsive: true,
+      plugins: { legend: { labels: { color: "#94a3b8" } } },
+      scales: { x: { ticks: { color: "#64748b" }, grid: { color: "#1e2336" } }, y: { ticks: { color: "#64748b" }, grid: { color: "#1e2336" } } }
+    }
+  });
+}
+function barDS(label, data, color) { return { label, data, backgroundColor: color+"cc", borderColor: color, borderWidth: 1 }; }
+async function loadData() {
+  document.getElementById("status").textContent = "Veri yukleniyor...";
+  document.getElementById("status").style.display = "block";
+  document.getElementById("content").style.display = "none";
+  try {
+    const res = await fetch(API);
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const d = await res.json();
+    document.getElementById("c-bellek").textContent = d.bellek_farki.toFixed(1) + "x";
+    document.getElementById("c-hiz").textContent    = d.hiz_farki.toFixed(1) + "x";
+    document.getElementById("c-arama").textContent  = d.arama.fark_x.toFixed(1) + "x";
+    document.getElementById("c-malloc").textContent = (d.kopya.malloc_sayisi / d.pointer.malloc_sayisi).toFixed(1) + "x";
+    makeChart("chartBellek","bar",["Kopya","Pointer"],[barDS("Bellek (MB)",[mb(d.kopya.toplam_byte),mb(d.pointer.toplam_byte)],"#f87171")]);
+    makeChart("chartMalloc","bar",["Kopya","Pointer"],[barDS("malloc() sayisi",[d.kopya.malloc_sayisi,d.pointer.malloc_sayisi],"#c084fc")]);
+    makeChart("chartArama","bar",["LinkedList","HashMap"],[barDS("Arama suresi (ms)",[d.arama.linked_list_ms,d.arama.hash_map_ms],"#fbbf24")]);
+    makeChart("chartSure","bar",["Kopya","Pointer"],[barDS("Calisma suresi (ms)",[d.kopya.sure_ms,d.pointer.sure_ms],"#7dd3fc")]);
+    document.getElementById("rawJson").textContent = JSON.stringify(d, null, 2);
+    document.getElementById("status").style.display = "none";
+    document.getElementById("content").style.display = "block";
+  } catch(e) {
+    document.getElementById("status").innerHTML = "<span style='color:#f87171'>Hata: "+e.message+"</span><br><small>server.py calisiyor mu? python3 backend/server.py</small>";
+  }
+}
+loadData();
+</script>
+</body>
+</html>
