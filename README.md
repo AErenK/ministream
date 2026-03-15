@@ -1,4 +1,4 @@
-﻿# MiniStream - 2312101023
+﻿# MiniStream
 
 Bu repo, Algoritma ve Tasarim dersi kapsaminda hazirlanan `MiniStream` odev teslimidir.
 
