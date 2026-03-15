@@ -112,7 +112,7 @@ Sistemi 10x buyutmek gerekirse ilk degistirecegim sey sabit playlist kapasite st
 
 ## 5. Opsiyonel Gorevler
 
-### Secenek A (+5): `uretec.c` ile veri uretimi
+### Secenek A: `uretec.c` ile veri uretimi
 
 `data/uretec.c` dosyasi PDF'teki istekle uyumlu olacak sekilde genisletildi:
 
@@ -130,7 +130,7 @@ WSL ortaminda `./uretec` farkli satir sayilari ile calistirilip olusan CSV dosya
 
 Bu sonuc satir sayisi arttikca dosya boyutunun beklenen sekilde lineer buyudugunu gostermektedir.
 
-### Secenek B (+10): Python backend + web dashboard
+### Secenek B: Python backend + web dashboard
 
 Opsiyonel web gosterimi icin iki yeni dosya eklendi:
 
